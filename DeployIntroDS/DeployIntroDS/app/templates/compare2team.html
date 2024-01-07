@@ -1,0 +1,120 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% block title %}Compare 2 teams{% endblock %}
+{% block content %}
+<style>
+  #bgtables {
+    margin: auto;
+    line-height: 35px;
+    height: 195px;
+    background-color: #44a1ff;
+    background-image: url("{{ url_for('static', filename='img/secondary-bg.svg') }}");
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+  }
+</style>
+<div id="bgtables">
+  <h1>Compare 2 Teams</h1>
+</div>
+
+
+<div class="container">
+  <div class="row gx-5">
+    <div class="col">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="team_name1"
+          aria-label="Floating label select example"
+        >
+        {% for team in football_teams %} {% if team_name1 == team %}
+        <option name="{{ team }}" value="{{ team }}" selected>{{ team }}</option>
+        {% else %}
+        <option name="{{ team }}" value="{{ team }}">{{ team }}</option>
+        {% endif %} {% endfor %}
+        </select>
+        <label for="floatingSelect">Team name 1</label>
+      </div>
+    </div>
+    <div class="col-2" style="text-align: center;"><p  class="h2">VS</p>
+      <div class="input-group mb-3">
+        <select
+          class="form-select"
+          id="season"
+        >
+        {% for seas in seasons %} {% if season == seas %}
+        <option name="{{ seas }}" value="{{ seas }}" selected>{{ seas }}</option>
+        {% else %}
+        <option name="{{ seas }}" value="{{ seas }}">{{ seas }}</option>
+        {% endif %} {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="team_name2"
+          aria-label="Floating label select example"
+        >
+        {% for team in football_teams %} {% if team_name2 == team %}
+        <option name="{{ team }}" value="{{ team }}" selected>{{ team }}</option>
+        {% else %}
+        <option name="{{ team }}" value="{{ team }}">{{ team }}</option>
+        {% endif %} {% endfor %}
+        </select>
+        <label for="floatingSelect">Team name 2</label>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="row p-1">
+    <div class="form-floating">
+      {% for option in options %}
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="inlineRadio{{ loop.index }}" name="type" value="{{ option.value }}" {% if option.value == type %} checked {% endif %}>
+          <label class="form-check-label" for="inlineRadio{{ loop.index }}">{{ option.label }}</label>
+        </div>
+      {% endfor %}
+    </div>
+    <button id="sumitBtn1" type="button" class="btn btn-primary" style="margin: 20px; width: 60px;">
+      Apply
+    </button>
+
+  </div>
+ 
+ 
+  
+  
+  </div>
+  <img
+    src="data:image/png;base64,{{ plot_url }}"
+    alt="Python Plot"
+    style="width: 100%"
+  />
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Add click event to the Apply button
+  document.querySelector("#sumitBtn1").addEventListener("click", function () {
+    // Get selected values
+    var selectedTeam1 = document.getElementById("team_name1").value;
+    var selectedTeam2 = document.getElementById("team_name2").value;
+    var season = document.getElementById("season").value;
+
+    // Get selected type
+    var selectedType = document.querySelector('input[name="type"]:checked').value;
+
+    // Build the URL with the selected values
+    var url = "/compare?team_name1=" + encodeURIComponent(selectedTeam1) + "&team_name2=" + encodeURIComponent(selectedTeam2) + "&type=" + encodeURIComponent(selectedType) + "&season=" + encodeURIComponent(season);
+
+    // Redirect to the new URL
+    window.location.href = url;
+  });
+});
+
+</script>
+{% endblock %}

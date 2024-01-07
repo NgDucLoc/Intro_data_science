@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/header.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='img/favicon.ico') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/favicon.ico') }}"
+      type="image/x-icon"
+    />
+  </head>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      width: 100%;
+    }
+  </style>
+  <body>
+    <div id="headerCont" class="sticky-top w-100">
+      <div id="logoHeader">
+        <img
+          src="{{ url_for('static', filename='img/mainicons.png') }}"
+          alt=""
+          width="100px"
+          id="icons"
+        />
+      </div>
+      <div class="w-100">
+        <div id="head1">
+          <div class="dropdown">
+            <button style="margin-left: 60px">
+              <strong
+                >Premier League &nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-caret-down"></i
+              ></strong>
+            </button>
+
+            <!-- <div class="dropdown-content">
+              <a href="#">Home</a>
+              <a href="#">Players</a>
+            </div> -->
+          </div>
+
+          <button id="headbtn" style="margin-left: 20px; float: right">
+            <strong>Sign in</strong>
+          </button>
+        </div>
+
+        <!--  -->
+        <div id="head2">
+          <button onclick="changePage(this, 'home')" style="margin-left: 60px">
+            Home
+          </button>
+          <button onclick="changePage(this, 'player')">Player</button>
+          <button onclick="changePage(this, 'team')">Team Stat</button>
+          <button onclick="changePage(this, 'compare')">Compare</button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="container-fluid justify-content-center bg-success"> -->
+    <!-- Your content goes here -->
+    {% block content %}{% endblock %}
+    <!-- </div> -->
+
+    <!-- Bootstrap JS and Popper.js (optional, for Bootstrap components that require JavaScript) -->
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+      function changePage(button, page) {
+        window.location.href = "/" + page;
+      }
+    </script>
+  </body>
+</html>

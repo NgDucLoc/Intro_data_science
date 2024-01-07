@@ -1,0 +1,98 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% block title %}Top Player{% endblock %}
+{% block content %}
+
+<style>
+  #bgtables {
+    margin: auto;
+    line-height: 35px;
+    height: 195px;
+    background-color: #44a1ff;
+    background-image: url("{{ url_for('static', filename='img/primary-graphic.svg') }}");
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+  }
+</style>
+<div id="bgtables">
+  <h1>Top Player</h1>
+  
+</div>
+<div id="sorting">
+  <div class="sort1">
+    <label for=""><i>Chọn tiêu chí</i></label>
+    <select id="sort" >
+      {% for type in type_labels %} {% if type_param == type.value %}
+        <option  value="{{ type.value }}" selected>{{ type.label }}</option>
+        {% else %}
+        <option  value="{{ type.value }}">{{ type.label }}</option>
+        {% endif %} {% endfor %}
+    </select>
+  </div>
+  <div class="sort1">
+    <label for=""><i>Mùa giải</i></label>
+    <select id="sort2" >
+      {% for seas in seasons %} {% if season == seas %}
+        <option name="{{ seas }}" value="{{ seas }}" selected>{{ seas }}</option>
+        {% else %}
+        <option name="{{ seas }}" value="{{ seas }}">{{ seas }}</option>
+        {% endif %} {% endfor %}
+    </select>
+  </div>
+ 
+  <div class="sort1">
+    <label for=""><i>Số lượng</i></label>
+    <input value="{{ quantity_param }}" id="quantity">
+   
+  </input>
+  </div>
+  <button type="button" class="btn btn-primary" style="margin: 20px;">
+   
+    Apply
+  </button>
+</div>
+<div class="justify-content-center container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Stats</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in player_data %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td colspan="1">
+                      <a class="link-underline-light" href="{{ url_for('player_detail', player_id=player.id) }}" >
+                      {{ player.name }}
+                      </a>
+                    </td>
+                    <td>{{ player.score | int }}</td>
+                  
+                </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+ 
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Add click event to the Apply button
+    document.querySelector(".btn-primary").addEventListener("click", function () {
+      // Get selected values
+      var selectedSort = document.getElementById("sort").value;
+      var selectedQuantity = document.getElementById("quantity").value;
+      var selectedSeason = document.getElementById("sort2").value;
+
+      // Build the URL with the selected values
+      var url = "/player?type=" + encodeURIComponent(selectedSort) + "&quantity=" + encodeURIComponent(selectedQuantity) + "&season=" + encodeURIComponent(selectedSeason);
+
+      // Redirect to the new URL
+      window.location.href = url;
+    });
+  });
+</script>
+{% endblock %}

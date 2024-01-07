@@ -1,0 +1,810 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% block title %}Top Player{% endblock %}
+{% block content %}
+
+<style>
+  #bgtables {
+    margin: auto;
+    line-height: 35px;
+    height: 195px;
+    background-color: #44a1ff;
+    background-image: url("{{ url_for('static', filename='img/primary-bg.svg') }}");
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+<div id="bgtables" class="position-relative">
+  <h1>{{ player_details.name }}</h1>
+  <h1 style="padding-right: 100px; font-size: 85px">
+    <!-- {{ player_details.shirtNum | int }} -->
+  </h1>
+</div>
+
+{% if player_details.position == 'D' %}
+<div class="container">
+  <div class="row gx-3">
+    <div class="col-3">
+      <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+      <div class="card border-2 rounded border bg-light">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Birth:</p>
+            <p class="fw-bold">{{ player_details.birth }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Position:</p>
+            <p class="fw-bold">{{ player_details.positionInfo }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Appearances:</p>
+            <p class="fw-bold">{{ player_details.appearances | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Goals:</p>
+            <p class="fw-bold">{{ player_details.goals | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Wins:</p>
+            <p class="fw-bold">{{ player_details.wins | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Losses:</p>
+            <p class="fw-bold">{{ player_details.losses | int }}</p>
+          </li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Defence</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Clean sheets</p>
+                <p class="fw-bold">{{ player_details.clean_sheet | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals Conceded</p>
+                <p class="fw-bold">{{ player_details.goals_conceded | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Tackles</p>
+                <p class="fw-bold">{{ player_details.total_tackle | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Blocked shots</p>
+                <p class="fw-bold">
+                  {{ player_details.blocked_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Interceptions</p>
+                <p class="fw-bold">{{ player_details.interception | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Duels won</p>
+                <p class="fw-bold">{{ player_details.duel_won | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Duels lost</p>
+                <p class="fw-bold">{{ player_details.duel_lost | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Own goals</p>
+                <p class="fw-bold">{{ player_details.own_goals | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Team play</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Assists</p>
+                <p class="fw-bold">{{ player_details.goal_assist | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Passes</p>
+                <p class="fw-bold">{{ player_details.total_pass | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Big Chances Created</p>
+                <p class="fw-bold">
+                  {{ player_details.big_chance_created | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Crosses</p>
+                <p class="fw-bold">{{ player_details.total_cross | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Through balls</p>
+                <p class="fw-bold">
+                  {{ player_details.total_through_ball | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Accurate long balls</p>
+                <p class="fw-bold">
+                  {{ player_details.accurate_long_balls | int }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Discipline</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Yellow cards</p>
+                <p class="fw-bold">{{ player_details.yellow_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Red cards</p>
+                <p class="fw-bold">{{ player_details.red_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Fouls</p>
+                <p class="fw-bold">{{ player_details.fouls | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Offsides</p>
+                <p class="fw-bold">{{ player_details.total_offside | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Attack</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals</p>
+                <p class="fw-bold">{{ player_details.goals | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Headed goals</p>
+                <p class="fw-bold">{{ player_details.att_hd_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with right foot</p>
+                <p class="fw-bold">{{ player_details.att_rf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with left foot</p>
+                <p class="fw-bold">{{ player_details.att_lf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Hit woodwork</p>
+                <p class="fw-bold">{{ player_details.hit_woodwork | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif player_details.position == 'F' %}
+<div class="container">
+  <div class="row gx-3">
+    <div class="col-3">
+      <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+      <div class="card border-2 rounded border bg-light">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Birth:</p>
+            <p class="fw-bold">{{ player_details.birth }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Position:</p>
+            <p class="fw-bold">{{ player_details.positionInfo }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Appearances:</p>
+            <p class="fw-bold">{{ player_details.appearances | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Goals:</p>
+            <p class="fw-bold">{{ player_details.goals | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Wins:</p>
+            <p class="fw-bold">{{ player_details.wins | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Losses:</p>
+            <p class="fw-bold">{{ player_details.losses | int }}</p>
+          </li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Attack</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals</p>
+                <p class="fw-bold">{{ player_details.goals | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Headed goals</p>
+                <p class="fw-bold">{{ player_details.att_hd_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with right foot</p>
+                <p class="fw-bold">{{ player_details.att_rf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with left foot</p>
+                <p class="fw-bold">{{ player_details.att_lf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Penalties scored</p>
+                <p class="fw-bold">{{ player_details.att_pen_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Shots</p>
+                <p class="fw-bold">
+                  {{ player_details.total_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Shots on target</p>
+                <p class="fw-bold">
+                  {{ player_details.ontarget_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Big chances missed</p>
+                <p class="fw-bold">
+                  {{ player_details.big_chance_missed | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Hit woodwork</p>
+                <p class="fw-bold">{{ player_details.hit_woodwork | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Team play</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Assists</p>
+                <p class="fw-bold">{{ player_details.goal_assist | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Passes</p>
+                <p class="fw-bold">{{ player_details.total_pass | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Big Chances Created</p>
+                <p class="fw-bold">
+                  {{ player_details.big_chance_created | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Crosses</p>
+                <p class="fw-bold">{{ player_details.total_cross | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Through balls</p>
+                <p class="fw-bold">
+                  {{ player_details.total_through_ball | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Accurate long balls</p>
+                <p class="fw-bold">
+                  {{ player_details.accurate_long_balls | int }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Discipline</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Yellow cards</p>
+                <p class="fw-bold">{{ player_details.yellow_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Red cards</p>
+                <p class="fw-bold">{{ player_details.red_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Fouls</p>
+                <p class="fw-bold">{{ player_details.fouls | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Offsides</p>
+                <p class="fw-bold">{{ player_details.total_offside | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Defence</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Clean sheets</p>
+                <p class="fw-bold">{{ player_details.clean_sheet | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals Conceded</p>
+                <p class="fw-bold">{{ player_details.goals_conceded | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Tackles</p>
+                <p class="fw-bold">{{ player_details.total_tackle | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Blocked shots</p>
+                <p class="fw-bold">
+                  {{ player_details.blocked_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Interceptions</p>
+                <p class="fw-bold">{{ player_details.interception | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif player_details.position == 'G' %}
+<div class="container">
+  <div class="row gx-3">
+    <div class="col-3">
+      <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+      <div class="card border-2 rounded border bg-light">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Birth:</p>
+            <p class="fw-bold">{{ player_details.birth }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Position:</p>
+            <p class="fw-bold">{{ player_details.positionInfo }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Appearances:</p>
+            <p class="fw-bold">{{ player_details.appearances | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Clean sheets:</p>
+            <p class="fw-bold">{{ player_details.clean_sheet | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Wins:</p>
+            <p class="fw-bold">{{ player_details.wins | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Losses:</p>
+            <p class="fw-bold">{{ player_details.losses | int }}</p>
+          </li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Goalkeeping</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Saves</p>
+                <p class="fw-bold">{{ player_details.saves | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Penalties Saved</p>
+                <p class="fw-bold">{{ player_details.penalty_save | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Punches</p>
+                <p class="fw-bold">{{ player_details.punches | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">High Claims</p>
+                <p class="fw-bold">
+                  {{ player_details.good_high_claim | int }}
+                </p>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Sweeper clearances</p>
+                <p class="fw-bold">
+                  {{ player_details.total_keeper_sweeper | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Throw outs</p>
+                <p class="fw-bold">{{ player_details.keeper_throws | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goal Kicks</p>
+                <p class="fw-bold">{{ player_details.goal_kicks | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Team play</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Assists</p>
+                <p class="fw-bold">{{ player_details.goal_assist | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Passes</p>
+                <p class="fw-bold">{{ player_details.total_pass | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals</p>
+                <p class="fw-bold">{{ player_details.goals | int }}</p>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Accurate long balls</p>
+                <p class="fw-bold">
+                  {{ player_details.accurate_long_balls | int }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Discipline</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Yellow cards</p>
+                <p class="fw-bold">{{ player_details.yellow_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Red cards</p>
+                <p class="fw-bold">{{ player_details.red_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Fouls</p>
+                <p class="fw-bold">{{ player_details.fouls | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Defence</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Clean sheets</p>
+                <p class="fw-bold">{{ player_details.clean_sheet | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals Conceded</p>
+                <p class="fw-bold">{{ player_details.goals_conceded | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Errors leading to goal</p>
+                <p class="fw-bold">
+                  {{ player_details.error_lead_to_goal | int }}
+                </p>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Own goals</p>
+                <p class="fw-bold">{{ player_details.own_goals | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif player_details.position == 'M' %}
+<div class="container">
+  <div class="row gx-3">
+    <div class="col-3">
+      <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+      <div class="card border-2 rounded border bg-light">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Birth:</p>
+            <p class="fw-bold">{{ player_details.birth }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Position:</p>
+            <p class="fw-bold">{{ player_details.positionInfo }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Appearances:</p>
+            <p class="fw-bold">{{ player_details.appearances | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Goals:</p>
+            <p class="fw-bold">{{ player_details.goals | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Wins:</p>
+            <p class="fw-bold">{{ player_details.wins | int }}</p>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <p class="h5">Losses:</p>
+            <p class="fw-bold">{{ player_details.losses | int }}</p>
+          </li>
+        </ul>
+      </div>
+      <!-- </div> -->
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Attack</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals</p>
+                <p class="fw-bold">{{ player_details.goals | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Headed goals</p>
+                <p class="fw-bold">{{ player_details.att_hd_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with right foot</p>
+                <p class="fw-bold">{{ player_details.att_rf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals with left foot</p>
+                <p class="fw-bold">{{ player_details.att_lf_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Penalties scored</p>
+                <p class="fw-bold">{{ player_details.att_pen_goal | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Shots</p>
+                <p class="fw-bold">
+                  {{ player_details.total_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Shots on target</p>
+                <p class="fw-bold">
+                  {{ player_details.ontarget_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Big chances missed</p>
+                <p class="fw-bold">
+                  {{ player_details.big_chance_missed | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Hit woodwork</p>
+                <p class="fw-bold">{{ player_details.hit_woodwork | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Team play</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Assists</p>
+                <p class="fw-bold">{{ player_details.goal_assist | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Passes</p>
+                <p class="fw-bold">{{ player_details.total_pass | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Big Chances Created</p>
+                <p class="fw-bold">
+                  {{ player_details.big_chance_created | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Crosses</p>
+                <p class="fw-bold">{{ player_details.total_cross | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Through balls</p>
+                <p class="fw-bold">
+                  {{ player_details.total_through_ball | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Accurate long balls</p>
+                <p class="fw-bold">
+                  {{ player_details.accurate_long_balls | int }}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Discipline</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Yellow cards</p>
+                <p class="fw-bold">{{ player_details.yellow_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Red cards</p>
+                <p class="fw-bold">{{ player_details.red_card | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Fouls</p>
+                <p class="fw-bold">{{ player_details.fouls | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Offsides</p>
+                <p class="fw-bold">{{ player_details.total_offside | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <!-- <div class="p-3 border-2 border-primary rounded border bg-light"> -->
+          <div
+            class="card border-2 rounded border bg-light"
+            style="border-top: 5px; border-top-color: #44a1ff"
+          >
+            <div class="card-header d-flex justify-content-between">
+              <p class="h2">Defence</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Clean sheets</p>
+                <p class="fw-bold">{{ player_details.clean_sheet | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Goals Conceded</p>
+                <p class="fw-bold">{{ player_details.goals_conceded | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Tackles</p>
+                <p class="fw-bold">{{ player_details.total_tackle | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Blocked shots</p>
+                <p class="fw-bold">
+                  {{ player_details.blocked_scoring_att | int }}
+                </p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Interceptions</p>
+                <p class="fw-bold">{{ player_details.interception | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Duels won</p>
+                <p class="fw-bold">{{ player_details.duel_won | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Duels lost</p>
+                <p class="fw-bold">{{ player_details.duel_lost | int }}</p>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <p class="h5">Own goals</p>
+                <p class="fw-bold">{{ player_details.own_goals | int }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %}

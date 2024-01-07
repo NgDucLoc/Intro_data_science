@@ -1,0 +1,82 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %}
+{% block title %}Team Stat{% endblock %}
+{% block content %}
+<style>
+  #bgtables {
+    margin: auto;
+    line-height: 35px;
+    height: 195px;
+    background-color: #44a1ff;
+    background-image: url("{{ url_for('static', filename='img/secondary-bg.svg') }}");
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+  }
+</style>
+<div id="bgtables">
+  <h1>Team Stat</h1>
+</div>
+
+
+<div class="container">
+  
+  <div class="form-floating">
+    <select
+      class="form-select"
+      id="team_name"
+      aria-label="Floating label select example"
+    >
+    {% for team in football_teams %} {% if team_name == team %}
+    <option name="{{ team }}" value="{{ team }}" selected>{{ team }}</option>
+    {% else %}
+    <option name="{{ team }}" value="{{ team }}">{{ team }}</option>
+    {% endif %} {% endfor %}
+    </select>
+    <label for="floatingSelect">Team name</label>
+  </div>
+  
+  <div class="form-floating">
+    {% for option in options %}
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="checkbox" id="inlineCheckbox{{ loop.index }}" name="type[]" value="{{ option.value }}" {% if option.value in type %} checked {% endif %}>
+    <label class="form-check-label" for="inlineCheckbox{{ loop.index }}">{{ option.label }}</label>
+  </div>
+  {% endfor %}
+  
+  </div>
+  
+  
+    <button id="sumitBtn1" type="button" class="btn btn-primary" style="margin: 20px">
+      Apply
+    </button>
+  </div>
+  <img
+    src="data:image/png;base64,{{ plot_url }}"
+    alt="Python Plot"
+    style="width: 100%"
+  />
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Add click event to the Apply button
+  document.querySelector("#sumitBtn1").addEventListener("click", function () {
+    // Get selected values
+    var selectedTeam = document.getElementById("team_name").value;
+
+    // Get selected types as an array
+    var selectedTypes = [];
+    document.querySelectorAll('input[name="type[]"]:checked').forEach(function (checkbox) {
+      selectedTypes.push(checkbox.value);
+    });
+
+    // Build the URL with the selected values
+    var url = "/team?team_name=" + encodeURIComponent(selectedTeam) + "&type=" + encodeURIComponent(JSON.stringify(selectedTypes));
+
+    // Redirect to the new URL
+    window.location.href = url;
+  });
+});
+</script>
+{% endblock %}
